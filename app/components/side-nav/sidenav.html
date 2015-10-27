@@ -1,0 +1,14 @@
+<nav class="purple darken-3">
+  <ul id="nav-mobile" class="right hide-on-med-and-down">
+    <li *ng-if=" hoodie.account.username &&  hoodie.account.hasValidSession()"><a (click)="signOut()">Sign Out</a></li>
+    <li *ng-if="!hoodie.account.username || !hoodie.account.hasValidSession()"><a (click)="signIn()">Sign In</a> </li>
+  </ul>
+  <ul id="slide-out" class="side-nav fixed">
+    <div class="waf purple darken-3">Manu super site</div>
+    <ng-content></ng-content>
+  </ul>
+  <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+</nav>
+
+<!-- Modal Structure -->
+<login-popup _id="login-popup"></login-popup>

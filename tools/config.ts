@@ -26,7 +26,7 @@ export const PATH = {
       all: `${APP_DEST}/${ENV}`,
       lib: `${APP_DEST}/${ENV}/lib`,
       css: `${APP_DEST}/${ENV}/css`,
-      fonts: `${APP_DEST}/${ENV}/fonts`
+      fonts: `${APP_DEST}/${ENV}/font`
     },
     test: 'test',
     tmp: '.tmp'
@@ -43,22 +43,28 @@ export const PATH = {
       `${APP_SRC}/system.config.js`,
       `${ANGULAR_BUNDLES}/angular2.dev.js`,
       `${ANGULAR_BUNDLES}/router.dev.js`,
-      `${ANGULAR_BUNDLES}/http.dev.js`
+      `${ANGULAR_BUNDLES}/http.dev.js`,
+      `./lib/jquery-2.1.0.min.js`,
+      `./lib/materialize.min.js`,
+      `./data/hoodie.bundle.min.js`
     ],
     jslib_copy_only: [
       resolve('systemjs/dist/system-polyfills.js'),
       resolve('systemjs/dist/system-polyfills.js.map')
     ],
     csslib: [
-      resolve('bootstrap/dist/css/bootstrap.css'),
-      resolve('bootstrap/dist/css/bootstrap.css.map')
+      /*resolve('bootstrap/dist/css/bootstrap.css'),
+      resolve('bootstrap/dist/css/bootstrap.css.map')*/
+      `${APP_SRC}/css/materialize.css`,
+      `${APP_SRC}/components/app/app.css`
     ],
     fonts: [
       resolve('bootstrap/dist/fonts/glyphicons-halflings-regular.eot'),
       resolve('bootstrap/dist/fonts/glyphicons-halflings-regular.svg'),
       resolve('bootstrap/dist/fonts/glyphicons-halflings-regular.ttf'),
       resolve('bootstrap/dist/fonts/glyphicons-halflings-regular.woff'),
-      resolve('bootstrap/dist/fonts/glyphicons-halflings-regular.woff2')
+      resolve('bootstrap/dist/fonts/glyphicons-halflings-regular.woff2'),
+      `${APP_SRC}/font/**/*`
     ]
   }
 };

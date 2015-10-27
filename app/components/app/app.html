@@ -1,8 +1,15 @@
-<section class="sample-app-content">
-  <nav>
-    <a [router-link]="['/Home']">Home</a>
-    <a [router-link]="['/About']">About</a>
-  </nav>
-
-  <router-outlet></router-outlet>
-</section>
+<header>
+  <side-nav>
+    <li><a [router-link]="['/Home']">Home</a></li>
+    <li><a [router-link]="['/About']">About</a></li>
+    <li><a [router-link]="['/Todos']">Todos</a></li>
+    <li><a [router-link]="['/Schedule']">Emploi du temps</a></li>
+  </side-nav>
+</header>
+<main>
+  <div class="container">
+    <div class="row">
+    <router-outlet></router-outlet>
+    </div>
+  </div>
+</main>

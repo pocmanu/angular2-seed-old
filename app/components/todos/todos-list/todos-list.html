@@ -1,0 +1,9 @@
+<!--<form #f="form">
+  <input type="radio" name="done" value="done">Done</input>
+  <input type="radio" name="done" value="not done" default>To be done</input>
+  <input type="radio" name="done" value="all">All</input>
+</form>-->
+<div *ng-for="#todo of todos">
+  <md-checkbox [checked]="todo.done==true" (click)="toggleCompletion({'id': todo.id, 'done':!todo.done})" [_id]="todo.id" [uid]="todo.id">{{todo.title}}</md-checkbox>
+  <a class="tiny material-icons" (click)="removeTodo(todo.id)">delete</a>
+</div>
