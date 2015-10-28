@@ -6,21 +6,11 @@ export {ISchedule} from './schedule-interface';
 
 export class ScheduleService {
   scheduleCache = <Array<ISchedule>>[];
-  update = new EventEmitter();
   store;
   hoodie;
 
   constructor( @Inject(HoodieProvider) provider) {
 
-    this.hoodie = provider.getHoodie();
-    this.store = this.hoodie.store('schedule');
-    this.hoodie.account.on('signout', () => { this.scheduleCache = []; this.update.next(this.scheduleCache); });
-    if (!this.hoodie.account.hasValidSession()) {
-      console.log('trying to reauthenticate');
-      this.hoodie.account.authenticate()
-        .then(() => { console.log(this.hoodie.account.hasValidSession()); /**this.onInit();*/ })
-        .fail(() => { console.log(); });
-    }
   }
 
   onInit = () => {

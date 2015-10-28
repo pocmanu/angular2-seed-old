@@ -6,7 +6,7 @@ export {ITodo} from './todo-interface';
 
 export class TodosService {
   todosCache = <Array<ITodo>>[];
-  update = new EventEmitter();
+  updateEmitter = new EventEmitter();
   store;
   hoodie;
 
@@ -16,15 +16,15 @@ export class TodosService {
     this.store = this.hoodie.store('todo');
     this.hoodie.account.on('signout error:unauthenticated', () => {
       this.todosCache = [];
-      this.update.next(this.todosCache);
+      this.updateEmitter.next(this.todosCache);
     });
     this.hoodie.account.on('signin reauthenticated', this.onInit);
-    this.hoodie.account.on('reauthenticated', () => { console.log('reauthenticated'); this.connected = true; });
- }
+    this.hoodie.account.authenticate().then(() => { this.onInit(); });
+  }
 
   onInit = () => {
     this.getAllTodos().then((todos) => {
-      this.update.next(todos);
+      this.updateEmitter.next(todos);
       this.store.off('add remove update');
       this.store.on('add', this.onAdd);
       this.store.on('remove', this.onRemove);
@@ -54,12 +54,12 @@ export class TodosService {
 
   onAdd = (todo: ITodo) => {
     this.todosCache.unshift(todo);
-    this.update.next(this.todosCache);
+    this.updateEmitter.next(this.todosCache);
   };
 
   onRemove = (todo: ITodo) => {
     this.todosCache.splice(this.findItemIndexById(this.todosCache, todo.id), 1);
-    this.update.next(this.todosCache);
+    this.updateEmitter.next(this.todosCache);
   };
 
   onUpdate = (changeName, object) => {
@@ -74,5 +74,9 @@ export class TodosService {
       }
     }
     return null;
+  };
+
+  observer = (obs) => {
+    this.updateEmitter.observer(obs);
   };
 }

@@ -1,7 +1,6 @@
-import {Component, View, Inject, ViewEncapsulation, NgClass} from 'angular2/angular2';
-import {/*ControlGroup, Control, */FORM_DIRECTIVES} from 'angular2/angular2';
+import {Component, View, Inject, ViewEncapsulation, NgFor} from 'angular2/angular2';
+import {FORM_DIRECTIVES} from 'angular2/angular2';
 import {TodosService, ITodo} from './services/todos-service';
-import {TodosList} from './todos-list/todos-list';
 import {MdButton} from '../angular2-material/angular2-material';
 
 export {TodosService} from './services/todos-service';
@@ -12,7 +11,7 @@ export {TodosService} from './services/todos-service';
 @View({
   templateUrl: './components/todos/todos.html',
   encapsulation: ViewEncapsulation.None,
-  directives: [FORM_DIRECTIVES, TodosList, MdButton, NgClass]
+  directives: [FORM_DIRECTIVES, MdButton, NgFor]
 })
 export class Todos {
 
@@ -21,10 +20,11 @@ export class Todos {
 
   constructor( @Inject(TodosService) todosService: TodosService) {
     this.todosService = todosService;
-    this.todosService.update.observer(this);
+    this.todosService.observer(this);
     this.todosService.getAllTodos().then(
-      (todos) => { this.next(todos); }
-      );
+      (todos) => { this.todos = todos; }
+    );
+    //this.todos = [{"title":"waf"}, {"title":"wef"}, {"title":"wif"}];
   }
 
   addTodo = (formValue: any) => {

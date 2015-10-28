@@ -12,14 +12,14 @@ import {HoodieProvider} from '../../services/hoodie-provider';
 })
 export class LoginPopup {
 
-  hoodie;
+  hoodieProvider: HoodieProvider;
 
-  constructor(@Inject(HoodieProvider) provider) {
-    this.hoodie = provider.getHoodie();
+  constructor( @Inject(HoodieProvider) provider) {
+    this.hoodieProvider = provider;
   }
 
-  signIn=(formValue: any) => {
-    this.hoodie.account.signIn(formValue.username, formValue.password).then(
+  signIn = (formValue: any) => {
+    this.hoodieProvider.signIn(formValue.username, formValue.password).then(
       () => {
         console.log('success');
         Materialize.toast('Connection successful', 4000);
