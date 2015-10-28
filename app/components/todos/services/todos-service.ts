@@ -14,28 +14,13 @@ export class TodosService {
 
     this.hoodie = provider.getHoodie();
     this.store = this.hoodie.store('todo');
-    this.hoodie.account.on('signout', () => { this.todosCache = []; this.update.next(this.todosCache); });
+    this.hoodie.account.on('signout error:unauthenticated', () => {
+      this.todosCache = [];
+      this.update.next(this.todosCache);
+    });
     this.hoodie.account.on('signin reauthenticated', this.onInit);
-    this.hoodie.account.on('signin', () => { console.log('sign in'); });
-    this.hoodie.account.on('error:unauthenticated', () => { console.log('error:unauthenticated'); });
-    this.hoodie.account.on('reauthenticated', () => { console.log('reauthenticated' + ' / ' + this.hoodie.account.hasValidSession()); });
-    if (!this.hoodie.account.hasValidSession()) {
-      console.log('trying to reauthenticate');
-      this.hoodie.account.authenticate()
-        .then(() => {
-          console.log('re-authentication successful', this.hoodie.account.hasValidSession());
-          this.onInit();
-        })
-        .fail(() => {
-          this.todosCache = [];
-          this.update.next(this.todosCache);
-          console.log('re-authentication failed', this.hoodie);
-          console.log('check connection', this.hoodie.checkConnection());
-          console.log('is connected', this.hoodie.isConnected());
-          console.log('remote', this.hoodie.remote());
-        });
-    }
-  }
+    this.hoodie.account.on('reauthenticated', () => { console.log('reauthenticated'); this.connected = true; });
+ }
 
   onInit = () => {
     this.getAllTodos().then((todos) => {

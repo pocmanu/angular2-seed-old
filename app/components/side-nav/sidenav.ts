@@ -13,13 +13,31 @@ import {LoginPopup} from '../login/loginpopup';
 export class SideNav implements OnInit {
 
   hoodie;
+  connected: boolean = false;
 
   constructor( @Inject(HoodieProvider) provider) {
     this.hoodie = provider.getHoodie();
+    this.hoodie.account.on('signin', () => { console.log('signin'); this.connected = true; });
+    this.hoodie.account.on('authenticated', () => { console.log('reauthenticated'); this.connected = true; });
+    this.hoodie.account.on('signout error:unauthenticated', () => { this.connected = false; });
+    if (!this.hoodie.account.hasValidSession()) {
+      console.log('trying to reauthenticate');
+      this.hoodie.account.authenticate()
+        .then(() => {
+          console.log('re-authentication successful', this.hoodie.account.hasValidSession());
+          this.onInit();
+        })
+        .fail(() => {
+          console.log('re-authentication failed', this.hoodie);
+          console.log('check connection', this.hoodie.checkConnection());
+          console.log('is connected', this.hoodie.isConnected());
+          console.log('remote', this.hoodie.remote());
+        });
+    }
   }
 
   onInit() {
-    console.log(this.hoodie.account);
+    this.connected = this.hoodie.account.username && this.hoodie.account.hasValidSession();
     $('.button-collapse').sideNav();
     $('.modal-trigger').leanModal();
   }

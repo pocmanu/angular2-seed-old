@@ -76,6 +76,9 @@
     "systemjs": "^0.19.4",
 	"hoodie": "^11.0.0"
   },
+  "files": [
+    "dist/dev"
+  ],
   "hoodie": {
     "plugins": [
       "hoodie-plugin-appconfig",
