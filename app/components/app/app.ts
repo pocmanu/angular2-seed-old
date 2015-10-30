@@ -3,19 +3,18 @@ import {
   RouteConfig,
   ROUTER_DIRECTIVES
 } from 'angular2/router';
-// import {HTTP_BINDINGS} from 'http/http';
+// import {HTTP_PROVIDERS} from 'http/http';
 
 import {HomeCmp} from '../home/home';
 import {AboutCmp} from '../about/about';
 import {Todos, TodosService} from '../todos/todos';
-import {Schedule, ScheduleService} from '../schedule/schedule';
 import {SideNav} from '../side-nav/sidenav';
 import {NameList} from '../../services/name_list';
 import {HoodieProvider} from '../../services/hoodie-provider';
 
 @Component({
   selector: 'app',
-  viewBindings: [NameList, TodosService, HoodieProvider, ScheduleService],
+  viewProviders: [NameList, TodosService, HoodieProvider, ScheduleService],
   templateUrl: './components/app/app.html',
   styleUrls: ['./components/app/app.css'],
   encapsulation: ViewEncapsulation.None,
