@@ -7,10 +7,7 @@ import {
 
 import {HomeCmp} from '../home/home';
 import {AboutCmp} from '../about/about';
-import {Todos, TodosService} from '../todos/todos';
-import {SideNav} from '../side-nav/sidenav';
 import {NameList} from '../../services/name_list';
-import {HoodieProvider} from '../../services/hoodie-provider';
 
 @Component({
   selector: 'app',
@@ -18,7 +15,7 @@ import {HoodieProvider} from '../../services/hoodie-provider';
   templateUrl: './components/app/app.html',
   styleUrls: ['./components/app/app.css'],
   encapsulation: ViewEncapsulation.None,
-  directives: [ROUTER_DIRECTIVES, SideNav]
+  directives: [ROUTER_DIRECTIVES]
 })
 @RouteConfig([
   { path: '/', component: HomeCmp, as: 'Home' },
