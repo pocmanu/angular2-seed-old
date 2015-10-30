@@ -14,7 +14,7 @@
     "lint": "gulp tslint",
     "postinstall": "tsd reinstall --clean && tsd link && tsd rebundle && gulp postinstall",
     "reinstall": "npm cache clean && rm -rf node_modules && npm install",
-    "start": "gulp serve --env dev",
+    "start": "hoodie",
     "serve.dev": "gulp serve --env dev",
     "tasks.list": "gulp --tasks-simple",
     "test": "gulp test",
@@ -76,6 +76,17 @@
     "bootstrap": "^3.3.5",
     "es6-module-loader": "^0.17.8",
     "es6-shim": "^0.33.6",
-    "systemjs": "^0.19.4"
+    "systemjs": "^0.19.4",
+	"hoodie": "^11.0.0"
+  },
+  "files": [
+    "dist/dev"
+  ],
+  "hoodie": {
+    "plugins": [
+      "hoodie-plugin-appconfig",
+      "hoodie-plugin-email",
+      "hoodie-plugin-users"
+    ]
   }
 }
