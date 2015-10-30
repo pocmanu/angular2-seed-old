@@ -14,7 +14,7 @@ import {HoodieProvider} from '../../services/hoodie-provider';
 
 @Component({
   selector: 'app',
-  viewProviders: [NameList, TodosService, HoodieProvider, ScheduleService],
+  viewProviders: [NameList, TodosService, HoodieProvider],
   templateUrl: './components/app/app.html',
   styleUrls: ['./components/app/app.css'],
   encapsulation: ViewEncapsulation.None,
@@ -23,7 +23,7 @@ import {HoodieProvider} from '../../services/hoodie-provider';
 @RouteConfig([
   { path: '/', component: HomeCmp, as: 'Home' },
   { path: '/about', component: AboutCmp, as: 'About' },
-  { path: '/todos', component: Todos, as: 'Todos' },
-  { path: '/schedule', component: Schedule, as: 'Schedule' }
+  { path: '/todos', component: Todos, as: 'Todos' }/*,
+  { path: '/schedule', component: Schedule, as: 'Schedule' }*/
 ])
 export class AppCmp {}
