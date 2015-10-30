@@ -37,3 +37,7 @@ docs
 lib
 test
 tools/typings/tsd
+data/config.json
+data/hoodie.bundle.min.js
+data/hoodie.bundle.js
+data/pouch-config.json

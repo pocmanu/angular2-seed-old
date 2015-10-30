@@ -20,7 +20,7 @@ export class SideNav implements OnInit {
     provider.observer(this);
   }
 
-  onInit() {
+  onInit = () => {
     this.connected = this.hoodieProvider.isConnected();
     $('.button-collapse').sideNav();
     $('.modal-trigger').leanModal();

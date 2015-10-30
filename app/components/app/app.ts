@@ -11,7 +11,7 @@ import {NameList} from '../../services/name_list';
 
 @Component({
   selector: 'app',
-  viewProviders: [NameList],
+  viewProviders: [NameList, TodosService, HoodieProvider],
   templateUrl: './components/app/app.html',
   styleUrls: ['./components/app/app.css'],
   encapsulation: ViewEncapsulation.None,
@@ -19,6 +19,8 @@ import {NameList} from '../../services/name_list';
 })
 @RouteConfig([
   { path: '/', component: HomeCmp, as: 'Home' },
-  { path: '/about', component: AboutCmp, as: 'About' }
+  { path: '/about', component: AboutCmp, as: 'About' },
+  { path: '/todos', component: Todos, as: 'Todos' }/*,
+  { path: '/schedule', component: Schedule, as: 'Schedule' }*/
 ])
 export class AppCmp {}
