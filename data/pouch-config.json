@@ -1,15 +1,15 @@
 {
-  "file": "c:\\mpostec\\angular2\\angular2-seed3\\data\\pouch-config.json",
+  "file": "D:\\Manu\\workspace\\angular2-seed\\data\\pouch-config.json",
   "couchdb": {
-    "database_dir": "c:\\mpostec\\angular2\\angular2-seed3\\data",
+    "database_dir": "D:\\Manu\\workspace\\angular2-seed\\data",
     "uuid": "bfa16464-af5a-48d4-a2ed-f53fd17936a4"
   },
   "httpd": {
-    "port": 6056,
+    "port": 6003,
     "authentication_handlers": "{couch_httpd_oauth, oauth_authentication_handler},{couch_httpd_auth, default_authentication_handler},{couch_httpd_auth, cookie_authentication_handler}"
   },
   "log": {
-    "file": "c:\\mpostec\\angular2\\angular2-seed3\\data\\pouch.log",
+    "file": "D:\\Manu\\workspace\\angular2-seed\\data\\pouch.log",
     "level": "info"
   },
   "admins": {

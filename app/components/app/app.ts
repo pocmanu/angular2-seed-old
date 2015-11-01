@@ -8,6 +8,8 @@ import {
 import {HomeCmp} from '../home/home';
 import {AboutCmp} from '../about/about';
 import {NameList} from '../../services/name_list';
+import {Todos, TodosService} from '../todos/todos';
+import {HoodieProvider} from '../../services/hoodie-provider';
 
 @Component({
   selector: 'app',
