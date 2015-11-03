@@ -1,7 +1,7 @@
 import {Component, View, Inject, ViewEncapsulation, NgFor} from 'angular2/angular2';
 import {FORM_DIRECTIVES} from 'angular2/angular2';
 import {TodosService, ITodo} from './services/todos-service';
-import {MdButton} from '../angular2-material/angular2-material';
+import {MdButton, MdCheckbox} from '../angular2-material/angular2-material';
 
 export {TodosService} from './services/todos-service';
 
@@ -11,7 +11,7 @@ export {TodosService} from './services/todos-service';
 @View({
   templateUrl: './components/todos/todos.html',
   encapsulation: ViewEncapsulation.None,
-  directives: [FORM_DIRECTIVES, MdButton, NgFor]
+  directives: [FORM_DIRECTIVES, MdButton, MdCheckbox, NgFor]
 })
 export class Todos {
 

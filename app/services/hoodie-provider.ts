@@ -36,7 +36,7 @@ export class HoodieProvider {
 	}
 
 	signOut = () => {
-		return this.hoodie.signOut();
+		return this.hoodie.account.signOut();
 	}
 
 	signIn = (username: string, password: string) => {

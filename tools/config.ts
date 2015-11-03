@@ -51,8 +51,7 @@ export const PATH = {
       `${ANGULAR_BUNDLES}/router.dev.js`,
       `${ANGULAR_BUNDLES}/http.dev.js`,
       `./lib/jquery-2.1.0.min.js`,
-      `./lib/materialize.min.js`,
-      `./data/hoodie.bundle.min.js`
+      `./lib/materialize.min.js`
     ],
     jslib_copy_only: [
       resolve('systemjs/dist/system-polyfills.js'),

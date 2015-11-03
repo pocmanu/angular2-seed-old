@@ -11,5 +11,8 @@
   </div>
 </form>
 <div class="col s12">
-  <todos-list [todos]="todos" (update)="updateTodo($event)" (remove)="removeTodo($event)"></todos-list>
+  <div *ng-for="#todo of todos">
+    <md-checkbox [checked]="todo.done==true" (click)="toggleCompletion({'id': todo.id, 'done':!todo.done})" [_id]="todo.id" [uid]="todo.id">{{todo.title}}</md-checkbox>
+    <a class="tiny material-icons" (click)="removeTodo(todo.id)">delete</a>
+  </div>
 </div>

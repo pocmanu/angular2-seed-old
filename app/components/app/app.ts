@@ -10,6 +10,8 @@ import {AboutCmp} from '../about/about';
 import {NameList} from '../../services/name_list';
 import {Todos, TodosService} from '../todos/todos';
 import {HoodieProvider} from '../../services/hoodie-provider';
+import {Schedule} from '../schedule/schedule';
+import {SideNav} from '../side-nav/sidenav';
 
 @Component({
   selector: 'app',
@@ -17,12 +19,12 @@ import {HoodieProvider} from '../../services/hoodie-provider';
   templateUrl: './components/app/app.html',
   styleUrls: ['./components/app/app.css'],
   encapsulation: ViewEncapsulation.None,
-  directives: [ROUTER_DIRECTIVES]
+  directives: [ROUTER_DIRECTIVES, SideNav]
 })
 @RouteConfig([
   { path: '/', component: HomeCmp, as: 'Home' },
   { path: '/about', component: AboutCmp, as: 'About' },
-  { path: '/todos', component: Todos, as: 'Todos' }/*,
-  { path: '/schedule', component: Schedule, as: 'Schedule' }*/
+  { path: '/todos', component: Todos, as: 'Todos' },
+  { path: '/schedule', component: Schedule, as: 'Schedule' }
 ])
 export class AppCmp {}
