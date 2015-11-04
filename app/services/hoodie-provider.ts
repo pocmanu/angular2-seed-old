@@ -43,6 +43,10 @@ export class HoodieProvider {
 		return this.hoodie.account.signIn(username, password);
 	}
 
+	signUp = (username: string, password: string) => {
+		return this.hoodie.account.signUp(username, password);
+	}
+
 	observer = (obs) => {
 		this.connected.observer(obs);
 	}

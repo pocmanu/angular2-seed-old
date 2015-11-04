@@ -1,5 +1,5 @@
 <div [attr.id]="_id" class="modal" style="width: 40%;">
-  <form #f="form" (submit)='signIn(f.value)'>
+  <form [ng-form-model]="form" (submit)="onSubmit()" #hf="form">
     <div class="modal-content">
       <h4>Login</h4>
       <div class="input-field">
@@ -10,9 +10,13 @@
         <input ng-control="password" type="password" id="password">
         <label for="password" style="left: 0px;">Password</label>
       </div>
+      <div *ng-if="signup" class="input-field">
+        <input ng-control="passwordcheck" type="password" id="passwordcheck">
+        <label for="passwordcheck" style="left: 0px;">Confirm password</label>
+      </div>
     </div>
     <div class="modal-footer">
-      <button type="submit" class=" modal-action modal-close waves-effect waves-purlple btn-flat">OK</a>
+      <button type="submit" class="modal-action modal-close waves-effect purple lighten-1 waves-purple btn-flat">OK</a>
     </div>
   </form>
 </div>

@@ -20,17 +20,21 @@ export class SideNav implements OnInit {
     provider.observer(this);
   }
 
-  onInit = () => {
+  onInit() {
     this.connected = this.hoodieProvider.isConnected();
     $('.button-collapse').sideNav();
     $('.modal-trigger').leanModal();
-  }
+  };
 
   signOut = () => {
     this.hoodieProvider.signOut().then(() => {
       Materialize.toast('Successfully disconnected', 4000);
       console.log('disconnected');
     });
+  };
+
+  signUp = () => {
+    $('#signup-popup').openModal();
   };
 
   signIn = () => {
