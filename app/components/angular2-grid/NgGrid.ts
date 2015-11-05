@@ -997,12 +997,12 @@ export class NgGridItem implements OnInit {
 		
 		var mousePos = this._getMousePosition(e);
 		
-		if (mousePos.left < this._elemWidth && mousePos.left > this._elemWidth - 15
-			&& mousePos.top < this._elemHeight && mousePos.top > this._elemHeight - 15) {
+		if (mousePos.left < this._elemWidth && mousePos.left > this._elemWidth - 5
+			&& mousePos.top < this._elemHeight && mousePos.top > this._elemHeight - 5) {
 			return 'both';
-		} else if (mousePos.left < this._elemWidth && mousePos.left > this._elemWidth - 15) {
+		} else if (mousePos.left < this._elemWidth && mousePos.left > this._elemWidth - 5) {
 			return 'width';
-		} else if (mousePos.top < this._elemHeight && mousePos.top > this._elemHeight - 15) {
+		} else if (mousePos.top < this._elemHeight && mousePos.top > this._elemHeight - 5) {
 			return 'height';
 		}
 		
@@ -1013,16 +1013,19 @@ export class NgGridItem implements OnInit {
 		if (this._ngGrid.autoStyle) {
 			if (this._ngGrid.dragEnable && this.canDrag(e)) {
 				this._renderer.setElementStyle(this._ngEl, 'cursor', 'move');
-			} else if (this._ngGrid.resizeEnable && !this._resizeHandle) {
+			} 
+			if (this._ngGrid.resizeEnable && !this._resizeHandle) {
 				var mousePos = this._getMousePosition(e);
 
-				if (mousePos.left < this._elemWidth && mousePos.left > this._elemWidth - 15
-					&& mousePos.top < this._elemHeight && mousePos.top > this._elemHeight - 15) {
+				if (mousePos.left < this._elemWidth && mousePos.left > this._elemWidth - 5
+					&& mousePos.top < this._elemHeight && mousePos.top > this._elemHeight - 5) {
 					this._renderer.setElementStyle(this._ngEl, 'cursor', 'nwse-resize');
-				} else if (mousePos.left < this._elemWidth && mousePos.left > this._elemWidth - 15) {
+				} else if (mousePos.left < this._elemWidth && mousePos.left > this._elemWidth - 5) {
 					this._renderer.setElementStyle(this._ngEl, 'cursor', 'ew-resize');
-				} else if (mousePos.top < this._elemHeight && mousePos.top > this._elemHeight - 15) {
+				} else if (mousePos.top < this._elemHeight && mousePos.top > this._elemHeight - 5) {
 					this._renderer.setElementStyle(this._ngEl, 'cursor', 'ns-resize');
+				} else if (this._ngGrid.dragEnable && this.canDrag(e)) {
+					this._renderer.setElementStyle(this._ngEl, 'cursor', 'move');
 				} else {
 					this._renderer.setElementStyle(this._ngEl, 'cursor', 'default');
 				}
