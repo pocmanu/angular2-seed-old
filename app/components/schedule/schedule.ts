@@ -14,6 +14,15 @@ export class Schedule {
   boxes = [];
 
   constructor() {
-    this.boxes = [{title: 'waf', text: 'wef'}];
+    this.boxes = [{title: 'waf', text: 'wef'}, {title: 'wef', text: 'wef'}];
   }
+
+  public changeDuration = (box: any, rows: any) => {
+    console.log(rows);
+    //box.title = 'waf : ' + rows;
+  };
+
+  log=(event) => {
+    console.log(event);
+  };
 }
