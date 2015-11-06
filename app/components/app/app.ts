@@ -8,14 +8,15 @@ import {
 import {HomeCmp} from '../home/home';
 import {AboutCmp} from '../about/about';
 import {NameList} from '../../services/name_list';
-import {Todos, TodosService} from '../todos/todos';
-import {HoodieProvider} from '../../services/hoodie-provider';
+import {ServiceFactory} from '../../services/service_factory';
+import {Todos} from '../todos/todos';
+import {HoodieProvider} from '../../services/hoodie_provider';
 import {Schedule} from '../schedule/schedule';
 import {SideNav} from '../side-nav/sidenav';
 
 @Component({
   selector: 'app',
-  viewProviders: [NameList, TodosService, HoodieProvider],
+  viewProviders: [NameList, HoodieProvider, ServiceFactory],
   templateUrl: './components/app/app.html',
   styleUrls: ['./components/app/app.css'],
   encapsulation: ViewEncapsulation.None,

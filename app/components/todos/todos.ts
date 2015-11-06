@@ -1,9 +1,8 @@
-import {Component, View, Inject, ViewEncapsulation, NgFor} from 'angular2/angular2';
+import {Component, View, ViewEncapsulation, NgFor} from 'angular2/angular2';
 import {FORM_DIRECTIVES} from 'angular2/angular2';
-import {TodosService, ITodo} from './services/todos-service';
+import {ITodo} from './services/todo-interface';
 import {MdButton, MdCheckbox} from '../angular2-material/angular2-material';
-
-export {TodosService} from './services/todos-service';
+import {ServiceFactory, AbstractService} from '../../services/service_factory';
 
 @Component({
   selector: 'todos'
@@ -15,29 +14,28 @@ export {TodosService} from './services/todos-service';
 })
 export class Todos {
 
-  todosService: TodosService;
+  todosService: AbstractService<ITodo>;
   todos: Array<ITodo> = [];
 
-  constructor( @Inject(TodosService) todosService: TodosService) {
-    this.todosService = todosService;
+  constructor( private factory: ServiceFactory) {
+    this.todosService = factory.getService<ITodo>('todo');
     this.todosService.observer(this);
-    this.todosService.getAllTodos().then(
+    this.todosService.getAll().then(
       (todos) => { this.todos = todos; }
     );
-    //this.todos = [{"title":"waf"}, {"title":"wef"}, {"title":"wif"}];
   }
 
   addTodo = (formValue: any) => {
     var newTodo = { title: formValue.todoText, done: false };
-    this.todosService.addTodo(newTodo);
+    this.todosService.addItem(newTodo);
   };
 
   removeTodo = (todoId) => {
-    this.todosService.removeTodo(todoId);
+    this.todosService.removeItem(todoId);
   };
 
   updateTodo = (todoData) => {
-    this.todosService.updateTodo(todoData);
+    this.todosService.updateItem(todoData);
   };
 
   next = (updatedTodos) => {

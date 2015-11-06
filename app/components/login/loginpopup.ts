@@ -1,6 +1,6 @@
 import {Component, View, Inject, NgIf, OnInit, NgClass} from 'angular2/angular2';
-import {FORM_DIRECTIVES, FORM_BINDINGS, ControlGroup, Validators, Control, FormBuilder} from 'angular2/angular2';
-import {HoodieProvider} from '../../services/hoodie-provider';
+import {FORM_DIRECTIVES, FORM_BINDINGS, ControlGroup, Validators, FormBuilder} from 'angular2/angular2';
+import {HoodieProvider} from '../../services/hoodie_provider';
 
 @Component({
   selector: 'login-popup',

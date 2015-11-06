@@ -11,17 +11,17 @@ export class HoodieProvider {
 		this.hoodie.account.on('authenticated', () => { console.log('reauthenticated'); this.connected.next(true); });
 		this.hoodie.account.on('signout error:unauthenticated', () => { this.connected.next(false); });
 		if (!this.hoodie.account.hasValidSession()) {
-			console.log('trying to reauthenticate');
+//			console.log('trying to reauthenticate');
 			this.hoodie.account.authenticate()
 				.then(() => {
-					console.log('re-authentication successful', this.hoodie.account.hasValidSession());
+//					console.log('re-authentication successful', this.hoodie.account.hasValidSession());
 					this.connected.next(true);
 				})
 				.fail(() => {
-					console.log('re-authentication failed', this.hoodie);
-					console.log('check connection', this.hoodie.checkConnection());
-					console.log('is connected', this.hoodie.isConnected());
-					console.log('remote', this.hoodie.remote());
+//					console.log('re-authentication failed', this.hoodie);
+//					console.log('check connection', this.hoodie.checkConnection());
+//					console.log('is connected', this.hoodie.isConnected());
+//					console.log('remote', this.hoodie.remote());
 					this.connected.next(false);
 				});
 		}
