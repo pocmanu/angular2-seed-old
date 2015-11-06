@@ -79,7 +79,7 @@ header, main, footer {
 }
 
 .grid-item {
-	background-color: #fff;
+	background-color: #e0f2f1;
 	-webkit-transition: width 0.25s, height 0.25s, left 0.25s, top 0.25s, right 0.25s, bottom 0.25s;
 	-moz-transition: width 0.25s, height 0.25s, left 0.25s, top 0.25s, right 0.25s, bottom 0.25s;
 	-o-transition: width 0.25s, height 0.25s, left 0.25s, top 0.25s, right 0.25s, bottom 0.25s;
@@ -96,7 +96,7 @@ header, main, footer {
 
 .grid-item.title {
   color: #fff;
-	background-color: #ab47bc;
+	background-color: #00897b;
   text-align: center;
   text-transform: capitalize;
 }
@@ -115,6 +115,8 @@ header, main, footer {
 		position: static !important;
 		width: 100% !important;
 		margin-bottom: 10px;
+    border: 1px solid;
+    border-color: rgba(0, 0, 0, 0.3);
 	}
 	.grid-item:last-child {
 		margin-bottom: 0;

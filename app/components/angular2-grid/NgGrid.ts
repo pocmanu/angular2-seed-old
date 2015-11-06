@@ -433,12 +433,12 @@ export class NgGrid implements OnInit, DoCheck {
 			
 			if (gridPos.col != itemPos.col || gridPos.row != itemPos.row) {
 				this._draggingItem.setGridPosition(gridPos.col, gridPos.row);
-				
-				this._fixGridCollisions(gridPos, dims);
-				this._cascadeGrid(gridPos, dims);
-				
-				this._updateSize(gridPos.col + dims.x - 1, gridPos.row + dims.y - 1);
 				this._placeholderRef.instance.setGridPosition(gridPos.col, gridPos.row);
+				
+				if (['up', 'down', 'left', 'right'].indexOf(this.cascade) >= 0) {
+					this._fixGridCollisions(gridPos, dims);
+					this._cascadeGrid(gridPos, dims);
+				}
 			}
 			if (!this._fixToGrid) {
 				this._draggingItem.setPosition(newL, newT);
@@ -474,21 +474,22 @@ export class NgGrid implements OnInit, DoCheck {
 			
 			if (calcSize.x != itemSize.x || calcSize.y != itemSize.y) {
 				this._resizingItem.setSize(calcSize.x, calcSize.y);
-				
-				this._fixGridCollisions(iGridPos, calcSize);
-				this._cascadeGrid(iGridPos, calcSize);
 				this._placeholderRef.instance.setSize(calcSize.x, calcSize.y);
-			}
-			if (!this._fixToGrid) {
-				this._resizingItem.setDimensions(newW, newH);
+				
+				if (['up', 'down', 'left', 'right'].indexOf(this.cascade) >= 0) {
+					this._fixGridCollisions(iGridPos, calcSize);
+					this._cascadeGrid(iGridPos, calcSize);
+				}
 			}
 			
-            var bigGrid = this._maxGridSize(itemPos.left + newW + (2*e.movementX), itemPos.top + newH + (2*e.movementY));
-            
-            if (this._resizeDirection == 'height') bigGrid.x = iGridPos.col + itemSize.x;
-            if (this._resizeDirection == 'width') bigGrid.y = iGridPos.row + itemSize.y;
-            
-            this._updateSize(bigGrid.x, bigGrid.y);
+			if (!this._fixToGrid)
+				this._resizingItem.setDimensions(newW, newH);
+			
+			var bigGrid = this._maxGridSize(itemPos.left + newW + (2*e.movementX), itemPos.top + newH + (2*e.movementY));
+			
+			if (this._resizeDirection == 'height') bigGrid.x = iGridPos.col + itemSize.x;
+			if (this._resizeDirection == 'width') bigGrid.y = iGridPos.row + itemSize.y;
+			
 			this.resize.next(this._resizingItem);
 			this._resizingItem.resize.next(this._resizingItem.getDimensions());
 		}
@@ -611,6 +612,7 @@ export class NgGrid implements OnInit, DoCheck {
 			switch (this.cascade) {
 				case "up":
 				case "down":
+				default:
 					if (this._maxRows > 0 && itemPos.row + (itemDims.y - 1) >= this._maxRows) {
 						itemPos.col++;
 					} else {
@@ -739,6 +741,8 @@ export class NgGrid implements OnInit, DoCheck {
 					}
 				}
 				break;
+			default:
+				break;
 		}
 	}
 	
@@ -753,10 +757,6 @@ export class NgGrid implements OnInit, DoCheck {
 				pos.row++;
 				
 				this._updateSize(null, pos.row + dims.y - 1);
-				
-				if (this._maxRows > 0 && (pos.row + dims.y - 1) > this._maxRows) {
-					throw new Error("Unable to calculate grid position");
-				}
 			}
 		}
 		
@@ -775,13 +775,9 @@ export class NgGrid implements OnInit, DoCheck {
 		for (var j = 0; j < dims.y; j++) {
 			if (this._itemGrid[pos.row + j] == null) this._itemGrid[pos.row + j] = {};
 			for (var i = 0; i < dims.x; i++) {
-				if (this._itemGrid[pos.row + j][pos.col + i] == null) {
-					this._itemGrid[pos.row + j][pos.col + i] = item;
-					
-					this._updateSize(pos.col + dims.x - 1, pos.row + dims.y - 1);
-				} else {
-					throw new Error("Cannot add item to grid. Space already taken.");
-				}
+				this._itemGrid[pos.row + j][pos.col + i] = item;
+				
+				this._updateSize(pos.col + dims.x - 1, pos.row + dims.y - 1);
 			}
 		}
 	}

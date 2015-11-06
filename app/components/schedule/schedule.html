@@ -1,6 +1,5 @@
 <div [ng-grid]="{'margins': [0, 0], 'min_cols': 1, 'max_cols': 5, 'min_height': 21,
-                 'col_width': 130, 'row_height':7, 'cascade':'none', 'auto-resize': true}" 
-                 >
+                 'col_width': 130, 'row_height':7, 'cascade':'none', 'auto-resize': true}">
     <div [ng-grid-item]="{'col':1, 'row':1, 'sizex': 1, 'sizey':3, 'dragHandle':'null'}">
         <div class="grid-item title">Lundi</div>
     </div>
@@ -16,9 +15,10 @@
     <div [ng-grid-item]="{'col':5, 'row':1, 'sizex': 1, 'sizey':3, 'dragHandle':'null'}">
         <div class="grid-item title">Vendredi</div>
     </div>
-    <div *ng-for="#box of boxes" 
-         [ng-grid-item]="{'col':1, 'row':4, 'sizex': 1, 'sizey':3, 'dragHandle':'.title'}">
-        <div class="grid-item title teal">{{box.title}}</div>
+    <div *ng-for="#box of boxes" (item-change)="log($event, box)" [ng-grid-item]="{'col':1, 'row':4, 'sizex': 1, 'sizey':3, 'dragHandle':'.title'}">
+        <div class="grid-item title teal darken-1">{{box.title}}
+            <span>{{box.time}}</span>
+        </div>
     </div>
 </div>
 <!--
@@ -26,8 +26,6 @@
          (drag)="log('drag')" 
          (^dragStop)="log('dragStop')" 
          (resizeStart)="log('resizeStart')" 
-         (resize)="log('resize')" 
          (resizeStop)="log('resizeStop')" 
-         (^itemChange)="log('itemChange')" 
         <div class="grid-item title">{{box.title}}</div>
     -->
