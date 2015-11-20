@@ -1,0 +1,25 @@
+<div class="row">
+	<div class="col s1" style="padding: 0px;padding-top: 11px">
+		<div [ng-grid]="_timelineConfig">
+			<div *ng-for="#event of _timelineItems" [ng-grid-item]="event.settings" class="grid-item caption">
+				<div>{{event.time | rowToDate:5:_startDate}}</div>
+			</div>
+		</div>
+	</div>
+	<div class="col s11" style="padding: 0px;">
+		<div [ng-grid]="_titleConfig">
+			<div *ng-for="#event of _titles" [ng-grid-item]="event.settings">
+				<div class="grid-item title">{{event.title}}</div>
+			</div>
+		</div>
+		<div [ng-grid]="_eventTableConfig" (drag-over)="setTargetPosition($event)">
+			<div *ng-for="#event of _eventTableItems" [ng-grid-item]="event.settings" (item-change)="onChange(event, $event)"
+				 (drag-start)="dragStart(event)" (drag-stop)="dragStop(event)" (resize-start)="resizeStart(event)" (resize-stop)="resizeStop(event)">
+				<span *ng-if="event.settings.show_hours" class="grid-item title start">{{event.settings.row | rowToDate:5:_startDate}}</span>
+				<div *ng-if="event.title" class="grid-item title teal">{{event.title}}</div>
+				<span *ng-if="event.settings.show_hours" class="grid-item title end">{{event.settings.row + event.settings.sizey | rowToDate:5:_startDate}}</span>
+			</div>
+		</div>
+		<div class="grid-item title orange" draggable="true" style="width:130px">DRAG</div>
+	</div>
+</div>

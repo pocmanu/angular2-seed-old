@@ -1,28 +1,34 @@
-import {Component, View, ViewEncapsulation, NgFor} from 'angular2/angular2';
+import {Component, ViewEncapsulation, NgFor} from 'angular2/angular2';
 import {NgGrid, NgGridItem} from '../angular2-grid/NgGrid';
+import {CalendarService} from '../agenda/calendar-service';
+import {Agenda} from '../agenda/agenda';
+import {CalendarEvent} from '../agenda/calendar-event';
 
 @Component({
-  selector: 'schedule'
-})
-@View({
+  selector: 'schedule',
   templateUrl: './components/schedule/schedule.html',
   encapsulation: ViewEncapsulation.None,
-  directives: [NgGrid, NgGridItem, NgFor]
+  directives: [NgGrid, NgGridItem, NgFor, Agenda, CalendarEvent],
+  viewProviders: [CalendarService]
 })
 export class Schedule {
 
   boxes = [];
+  calendarService: CalendarService
 
-  constructor() {
-    this.boxes = [{ title: 'waf', text: 'wef', time: 15 }, { title: 'wef', text: 'wef', time: 15 }];
+  constructor(calendarService: CalendarService) {
+    this.boxes = calendarService.getCalendarEvents();
+    this.calendarService = calendarService;
+    calendarService.calendarEventUpdate.observer(this);
   }
 
-  public changeDuration = (box: any, rows: any) => {
-    console.log(rows);
-    //box.title = 'waf : ' + rows;
+  public next = (newEvents: any): void => {
+    this.boxes = newEvents;
+    console.log('pif', this.boxes);
   };
 
-  log = (event: any, box: any) => {
-    box.time = event.sizey * 5;
-  };
+  public log = (event) => {
+    console.log(event);
+    this.calendarService.updateEvent(event);
+  }
 }
