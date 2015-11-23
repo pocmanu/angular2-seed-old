@@ -12,15 +12,18 @@ import {Component, View, Directive, ElementRef, Renderer, EventEmitter, DynamicC
 		'(touchend)': '_onMouseUp($event)',
 		'(window:resize)': '_onResize($event)',
 		'(document:mousemove)': '_onMouseMove($event)',
-		'(document:mouseup)': '_onMouseUp($event)'
+		'(document:mouseup)': '_onMouseUp($event)',
+		'(dragover)': '_onDragOver($event)',
+		'(drop)': '_onDrop($event)'
 	},
-	outputs: ['dragStart', 'drag', 'dragStop', 'resizeStart', 'resize', 'resizeStop']
+	outputs: ['dragStart', 'drag', 'dragStop', 'resizeStart', 'resize', 'resizeStop', 'dragOver']
 })
 export class NgGrid implements OnInit, DoCheck {
 	//	Event Emitters
 	public dragStart: EventEmitter = new EventEmitter();
 	public drag: EventEmitter = new EventEmitter();
 	public dragStop: EventEmitter = new EventEmitter();
+	public dragOver: EventEmitter = new EventEmitter();
 	public resizeStart: EventEmitter = new EventEmitter();
 	public resize: EventEmitter = new EventEmitter();
 	public resizeStop: EventEmitter = new EventEmitter();
@@ -61,12 +64,14 @@ export class NgGrid implements OnInit, DoCheck {
 	private _fixToGrid: boolean = false;
 	private _autoResize: boolean = false;
 	private _differ: KeyValueDiffer;
+	private _currentTargetPosition;
+	private _isDraggingFromOutside = false;
 	
 	//	Default config
 	private static CONST_DEFAULT_CONFIG = {
 		'margins': [10],
 		'draggable': true,
-		'resizeable': true,
+		'resizable': true,
 		'max_cols': 0,
 		'max_rows': 0,
 		'col_width': 250,
@@ -125,7 +130,7 @@ export class NgGrid implements OnInit, DoCheck {
 				case 'draggable':
 					this.dragEnable = val ? true : false;
 					break;
-				case 'resizeable':
+				case 'resizable':
 					this.resizeEnable = val ? true : false;
 					break;
 				case 'max_rows':
@@ -485,11 +490,11 @@ export class NgGrid implements OnInit, DoCheck {
 			if (!this._fixToGrid)
 				this._resizingItem.setDimensions(newW, newH);
 			
-			var bigGrid = this._maxGridSize(itemPos.left + newW + (2*e.movementX), itemPos.top + newH + (2*e.movementY));
-			
-			if (this._resizeDirection == 'height') bigGrid.x = iGridPos.col + itemSize.x;
-			if (this._resizeDirection == 'width') bigGrid.y = iGridPos.row + itemSize.y;
-			
+            var bigGrid = this._maxGridSize(itemPos.left + newW + (2*e.movementX), itemPos.top + newH + (2*e.movementY));
+            
+            if (this._resizeDirection == 'height') bigGrid.x = iGridPos.col + itemSize.x;
+            if (this._resizeDirection == 'width') bigGrid.y = iGridPos.row + itemSize.y;
+            
 			this.resize.next(this._resizingItem);
 			this._resizingItem.resize.next(this._resizingItem.getDimensions());
 		}
@@ -612,7 +617,7 @@ export class NgGrid implements OnInit, DoCheck {
 			switch (this.cascade) {
 				case "up":
 				case "down":
-				default:
+				default:			
 					if (this._maxRows > 0 && itemPos.row + (itemDims.y - 1) >= this._maxRows) {
 						itemPos.col++;
 					} else {
@@ -659,6 +664,8 @@ export class NgGrid implements OnInit, DoCheck {
 						
 						if (this._itemGrid[r][c] != null) {
 							var item = this._itemGrid[r][c];
+							if (item.isFixed) continue;
+							
 							var itemDims = item.getSize();
 							var itemPos = item.getGridPosition();
 							
@@ -757,6 +764,10 @@ export class NgGrid implements OnInit, DoCheck {
 				pos.row++;
 				
 				this._updateSize(null, pos.row + dims.y - 1);
+				
+				if (this._maxRows > 0 && (pos.row + dims.y - 1) > this._maxRows) {
+					throw new Error("Unable to calculate grid position");
+				}
 			}
 		}
 		
@@ -775,9 +786,13 @@ export class NgGrid implements OnInit, DoCheck {
 		for (var j = 0; j < dims.y; j++) {
 			if (this._itemGrid[pos.row + j] == null) this._itemGrid[pos.row + j] = {};
 			for (var i = 0; i < dims.x; i++) {
-				this._itemGrid[pos.row + j][pos.col + i] = item;
-				
-				this._updateSize(pos.col + dims.x - 1, pos.row + dims.y - 1);
+				if (this._itemGrid[pos.row + j][pos.col + i] == null) {
+					this._itemGrid[pos.row + j][pos.col + i] = item;
+					
+					this._updateSize(pos.col + dims.x - 1, pos.row + dims.y - 1);
+				} else {
+					throw new Error("Cannot add item to grid. Space already taken.");
+				}
 			}
 		}
 	}
@@ -844,7 +859,32 @@ export class NgGrid implements OnInit, DoCheck {
 		Object.keys(me._itemGrid).map(function(v) { maxes.push(Math.max.apply(null, Object.keys(me._itemGrid[v]))); });
 		return Math.max.apply(null, maxes);
 	}
-	
+	private _onDragStart(event) {
+		let newTargetPos = this.getTargetPosition(event);
+		this._createPlaceholder(newTargetPos, {x: 1, y:3});
+	}
+	private _onDrop(event) {
+		this._isDraggingFromOutside = false;
+		this._placeholderRef.dispose();
+	}
+	private _onDragOver(event) {
+		event.preventDefault();
+		let newTargetPos = this.getTargetPosition(event);
+		if (!this._currentTargetPosition || this._currentTargetPosition.col != newTargetPos.col || this._currentTargetPosition.row != newTargetPos.row) {
+			this._currentTargetPosition = newTargetPos;
+			this.dragOver.next(this._currentTargetPosition);
+			if (!this._isDraggingFromOutside) {
+				this._isDraggingFromOutside = true;
+				this._createPlaceholder(newTargetPos, {x: 1, y:3});
+			} else {
+				this._placeholderRef.instance.setGridPosition(newTargetPos.col, newTargetPos.row);
+			}
+		}
+	}
+	public getTargetPosition = (event) => {
+		let mousePos = this._getMousePosition(event);
+		return this._calculateGridPosition(mousePos.left - 65, mousePos.top - 7);
+	}
 	private _getMousePosition(e: any): {left: number, top: number} {
 		if (((<any>window).TouchEvent && e instanceof TouchEvent) || (e.touches || e.changedTouches)) {
 			e = e.touches.length > 0 ? e.touches[0] : e.changedTouches[0];
@@ -918,17 +958,23 @@ export class NgGridItem implements OnInit {
 	public resizeStop: EventEmitter = new EventEmitter();
 	
 	//	Default config
-	private static CONST_DEFAULT_CONFIG: { 'col': number, 'row': number, 'sizex': number, 'sizey': number, 'dragHandle': string, 'resizeHandle': string } = {
+	private static CONST_DEFAULT_CONFIG: { 'col': number, 'row': number, 'sizex': number, 'sizey': number, 'dragHandle': string, 'resizeHandle': string, 'fixed': boolean, 'draggable': boolean, 'resizable': boolean } = {
 		'col': 1,
 		'row': 1,
 		'sizex': 1,
 		'sizey': 1,
 		'dragHandle': null,
-		'resizeHandle': null
+		'resizeHandle': null,
+		'fixed': false,
+		'draggable': true,
+		'resizable': true
 	}
 	
 	public gridPosition = {'col': 1, 'row': 1}
 	public gridSize = {'x': 1, 'y': 1}
+	public isFixed: boolean = false;
+	public isDraggable: boolean = true;
+	public isResizable: boolean = true;
 	
 	//	Private variables
 	private _col: number = 1;
@@ -975,6 +1021,8 @@ export class NgGridItem implements OnInit {
 	
 	//	Public methods
 	public canDrag(e: any): boolean {
+		if (!this.isDraggable) return false;
+		
 		if (this._dragHandle) {
 			var parent = e.target.parentElement;
 			
@@ -985,6 +1033,8 @@ export class NgGridItem implements OnInit {
 	}
 	
 	public canResize(e: any): string {
+		if (!this.isResizable) return null;
+		
 		if (this._resizeHandle) {
 			var parent = e.target.parentElement;
 
@@ -1010,7 +1060,7 @@ export class NgGridItem implements OnInit {
 			if (this._ngGrid.dragEnable && this.canDrag(e)) {
 				this._renderer.setElementStyle(this._ngEl, 'cursor', 'move');
 			} 
-			if (this._ngGrid.resizeEnable && !this._resizeHandle) {
+			if (this._ngGrid.resizeEnable && !this._resizeHandle && this.isResizable) {
 				var mousePos = this._getMousePosition(e);
 
 				if (mousePos.left < this._elemWidth && mousePos.left > this._elemWidth - 5
@@ -1074,6 +1124,9 @@ export class NgGridItem implements OnInit {
 		this._sizey = config.sizey;
 		this._dragHandle = config.dragHandle;
 		this._resizeHandle = config.resizeHandle;
+		this.isDraggable = config.draggable ? true : false;
+		this.isResizable = config.resizable ? true : false;
+		this.isFixed = config.fixed ? true : false;
 		
 		this._recalculatePosition();
 		this._recalculateDimensions();

@@ -1,4 +1,4 @@
-import {EventEmitter, Inject} from 'angular2/angular2';
+import {EventEmitter} from 'angular2/angular2';
 
 export interface PersistentItem {
   id: string;

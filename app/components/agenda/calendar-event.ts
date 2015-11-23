@@ -12,5 +12,5 @@ export class CalendarEvent {
 	@Input('_id') public id: string;
 	@Input() public title: string;
 	@Input() public start: Date;
-	@Input() public end: Date;
+	@Input() public duration: number;
 }

@@ -13,11 +13,10 @@ import {Todos} from '../todos/todos';
 import {HoodieProvider} from '../../services/hoodie_provider';
 import {Schedule} from '../schedule/schedule';
 import {SideNav} from '../side-nav/sidenav';
-import {CalendarService} from '../agenda/calendar-service';
 
 @Component({
   selector: 'app',
-  viewProviders: [NameList, HoodieProvider, ServiceFactory, CalendarService],
+  viewProviders: [NameList, HoodieProvider, ServiceFactory],
   templateUrl: './components/app/app.html',
   styleUrls: ['./components/app/app.css'],
   encapsulation: ViewEncapsulation.None,
