@@ -33,21 +33,21 @@ export class HoodieProvider {
 
 	isConnected = () => {
 		return this.hoodie.account.username && this.hoodie.account.hasValidSession();
-	}
+	};
 
 	signOut = () => {
 		return this.hoodie.account.signOut();
-	}
+	};
 
 	signIn = (username: string, password: string) => {
 		return this.hoodie.account.signIn(username, password);
-	}
+	};
 
 	signUp = (username: string, password: string) => {
 		return this.hoodie.account.signUp(username, password);
-	}
+	};
 
 	observer = (obs) => {
 		this.connected.observer(obs);
-	}
+	};
 }
