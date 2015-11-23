@@ -24,6 +24,8 @@ export const ASSETS_DEST          = `${APP_DEST}/assets`;
 export const CSS_DEST             = `${APP_DEST}/css`;
 export const FONTS_DEST           = `${APP_DEST}/fonts`;
 export const LIB_DEST             = `${APP_DEST}/lib`;
+export const VERSION              = appVersion();
+
 export const VERSION_NPM          = '3.0.0';
 export const VERSION_NODE         = '4.0.0';
 
