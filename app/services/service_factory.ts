@@ -14,10 +14,10 @@ export class ServiceFactory {
 		this._hoodieProvider = hoodieProvider;
 	}
 
-	public getService = <T extends PersistentItem>(serviceName: String): AbstractService<T> => {
-		if (this.serviceMap.get(serviceName) == null) {
+	public getService = <T extends PersistentItem>(serviceName: string): AbstractService<T> => {
+		if (!this.serviceMap.get(serviceName)) {
 			this.serviceMap.set(serviceName, new AbstractService<T>(serviceName, this._hoodieProvider.getHoodie()));
 		}
 		return this.serviceMap.get(serviceName);
-	}
+	};
 }

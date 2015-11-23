@@ -10,10 +10,9 @@ export class AbstractService<T extends PersistentItem> {
   private updateEmitter = new EventEmitter();
   private store;
 
-  constructor(protected storeName: string, private hoodie: any) {
+  constructor(private storeName: string, private hoodie: any) {
 
-    this.hoodie = hoodie;
-    this.store = this.hoodie.store(storeName);
+    this.store = hoodie.store(storeName);
     this.hoodie.account.on('signout error:unauthenticated', () => {
       this.cache = [];
       this.updateEmitter.next(this.cache);
@@ -23,8 +22,9 @@ export class AbstractService<T extends PersistentItem> {
   }
 
   public onInit = () => {
-    this.getAll().then((todos) => {
-      this.updateEmitter.next(todos);
+    this.getAll().then((items) => {
+      console.log('items for store : ' + this.storeName, items);
+      this.updateEmitter.next(items);
       this.store.off('add remove update');
       this.store.on('add', this.onAdd);
       this.store.on('remove', this.onRemove);
@@ -45,7 +45,7 @@ export class AbstractService<T extends PersistentItem> {
   };
 
   public getAll = () => {
-    return this.hoodie.store.findAll(/*(doc) => { return doc.type === 'todo' && !doc.done; }*/)
+    return this.hoodie.store.findAll(this.storeName)
       .then(docs => {
         this.cache = docs;
         return this.cache;
