@@ -866,6 +866,7 @@ export class NgGrid implements OnInit, DoCheck {
 	private _onDrop(event) {
 		this._isDraggingFromOutside = false;
 		this._placeholderRef.dispose();
+		event.preventDefault();
 	}
 	private _onDragOver(event) {
 		event.preventDefault();

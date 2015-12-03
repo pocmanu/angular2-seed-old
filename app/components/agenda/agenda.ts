@@ -18,8 +18,8 @@ export class Agenda {
 		calStartTime: new Date(2015, 11, 17, 8, 0, 0, 0)
 	};
 
-	private eventChange: EventEmitter = new EventEmitter();
-	private eventAdded : EventEmitter = new EventEmitter();
+	private eventChange: EventEmitter<any> = new EventEmitter();
+	private eventAdded : EventEmitter<any> = new EventEmitter();
 
 	private _startDate: Date = new Date(2015, 11, 15, 8, 0, 0, 0);
 
@@ -48,7 +48,7 @@ export class Agenda {
 	constructor( @Query(CalendarEvent) events: QueryList<CalendarEvent>) {
 		this._events = events;
 		this.next(this._events);
-		this._events.changes.observer(this);
+		this._events.changes.subscribe(this.next);
 	};
 
 	public next = (changes: QueryList<CalendarEvent>) => {

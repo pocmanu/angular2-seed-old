@@ -7,7 +7,8 @@ export class HoodieProvider {
 	connected = new EventEmitter();
 
 	constructor() {
-		this.hoodie.account.on('signin', () => { console.log('signin'); this.connected.next(true); });
+		console.log(this.hoodie);
+/*		this.hoodie.account.on('signin', () => { console.log('signin'); this.connected.next(true); });
 		this.hoodie.account.on('authenticated', () => { console.log('reauthenticated'); this.connected.next(true); });
 		this.hoodie.account.on('signout error:unauthenticated', () => { this.connected.next(false); });
 		if (!this.hoodie.account.hasValidSession()) {
@@ -24,7 +25,7 @@ export class HoodieProvider {
 //					console.log('remote', this.hoodie.remote());
 					this.connected.next(false);
 				});
-		}
+		}*/
 	}
 
 	getHoodie = () => {
@@ -48,6 +49,6 @@ export class HoodieProvider {
 	};
 
 	observer = (obs) => {
-		this.connected.observer(obs);
+		this.connected.subscribe(obs);
 	};
 }

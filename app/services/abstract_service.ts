@@ -13,12 +13,12 @@ export class AbstractService<T extends PersistentItem> {
   constructor(private storeName: string, private hoodie: any) {
 
     this.store = hoodie.store(storeName);
-    this.hoodie.account.on('signout error:unauthenticated', () => {
+/*    this.hoodie.account.on('signout error:unauthenticated', () => {
       this.cache = [];
       this.updateEmitter.next(this.cache);
     });
     this.hoodie.account.on('signin reauthenticated', this.onInit);
-    this.hoodie.account.authenticate().then(() => { this.onInit(); });
+    this.hoodie.account.authenticate().then(() => { this.onInit(); });*/
   }
 
   public onInit = () => {
@@ -53,7 +53,7 @@ export class AbstractService<T extends PersistentItem> {
   };
 
   public observer = (obs) => {
-    this.updateEmitter.observer(obs);
+    this.updateEmitter.subscribe(obs);
   };
 
   private onAdd = (item: T) => {

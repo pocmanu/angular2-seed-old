@@ -13,10 +13,8 @@ import {LoginPopup} from '../login/loginpopup';
 export class SideNav implements OnInit {
 
   private connected: boolean = false;
-  private hoodieProvider : HoodieProvider;
 
-  constructor(private provider: HoodieProvider) {
-    this.hoodieProvider = provider;
+  constructor(private hoodieProvider: HoodieProvider) {
     this.hoodieProvider.observer(this);
   }
 

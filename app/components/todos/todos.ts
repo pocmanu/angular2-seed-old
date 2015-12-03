@@ -14,8 +14,8 @@ import {ServiceFactory, AbstractService} from '../../services/service_factory';
 })
 export class Todos {
 
-  todosService: AbstractService<ITodo>;
-  todos: Array<ITodo> = [];
+  private todosService: AbstractService<ITodo>;
+  private todos: Array<ITodo> = [];
 
   constructor( private factory: ServiceFactory) {
     this.todosService = factory.getService<ITodo>('todo');
@@ -25,20 +25,20 @@ export class Todos {
     );
   }
 
-  addTodo = (formValue: any) => {
+  public addTodo = (formValue: any) => {
     var newTodo = { title: formValue.todoText, done: false };
     this.todosService.addItem(newTodo);
   };
 
-  removeTodo = (todoId) => {
+  public removeTodo = (todoId) => {
     this.todosService.removeItem(todoId);
   };
 
-  updateTodo = (todoData) => {
+  public updateTodo = (todoData) => {
     this.todosService.updateItem(todoData);
   };
 
-  next = (updatedTodos) => {
+  public next = (updatedTodos) => {
     this.todos = updatedTodos;
   };
 }
