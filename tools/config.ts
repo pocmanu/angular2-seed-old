@@ -29,7 +29,7 @@ export const VERSION              = appVersion();
 export const VERSION_NPM          = '3.0.0';
 export const VERSION_NODE         = '4.0.0';
 
-
+// Declare NPM dependencies (Note that globs should not be injected).
 export const DEV_DEPENDENCIES = [
   { src: 'systemjs/dist/system-polyfills.js', dest: LIB_DEST },
 
@@ -37,25 +37,32 @@ export const DEV_DEPENDENCIES = [
   { src: 'reflect-metadata/Reflect.js', dest: LIB_DEST, inject: 'shims' },
   { src: 'systemjs/dist/system.src.js', dest: LIB_DEST, inject: 'shims' },
 
-  { src: 'angular2/bundles/angular2.dev.js',  dest: LIB_DEST, inject: true },
-  { src: 'angular2/bundles/router.dev.js',    dest: LIB_DEST, inject: true },
-  { src: 'angular2/bundles/http.dev.js',      dest: LIB_DEST, inject: true },
-  { src: 'jquery/dist/jquery.min.js',         dest: LIB_DEST, inject: true },
-  { src: 'materialize-css/dist/js/materialize.min.js', dest: LIB_DEST, inject: true },
- 
+  // Faster dev page load
+  { src: 'angular2/bundles/angular2.dev.js', dest: LIB_DEST, inject: 'libs' },
+  { src: 'angular2/bundles/router.dev.js', dest: LIB_DEST, inject: 'libs' },
+  { src: 'angular2/bundles/http.dev.js', dest: LIB_DEST, inject: 'libs' },
+  { src: 'jquery/dist/jquery.min.js',         dest: LIB_DEST, inject: 'libs' },
+  { src: 'materialize-css/dist/js/materialize.min.js', dest: LIB_DEST, inject: 'libs' },
+
   { src: 'bootstrap/dist/css/bootstrap.css', dest: CSS_DEST, inject: true },
   { src: 'materialize-css/dist/css/materialize.min.css',dest: CSS_DEST, inject: true },
 
-  { src: 'bootstrap/dist/fonts/glyphicons-halflings-regular.eot',   dest: FONTS_DEST},
-  { src: 'bootstrap/dist/fonts/glyphicons-halflings-regular.svg',   dest: FONTS_DEST},
-  { src: 'bootstrap/dist/fonts/glyphicons-halflings-regular.ttf',   dest: FONTS_DEST},
-  { src: 'bootstrap/dist/fonts/glyphicons-halflings-regular.woff',  dest: FONTS_DEST},
-  { src: 'bootstrap/dist/fonts/glyphicons-halflings-regular.woff2', dest: FONTS_DEST}
+  { src: 'bootstrap/dist/fonts/**/*', dest: FONTS_DEST}
+];
+
+DEV_DEPENDENCIES
+  .filter(d => !/\*/.test(d.src)) // Skip globs
+  .forEach(d => d.src = require.resolve(d.src));
+
+export const APP_ASSETS = [
+  { src: `${ASSETS_DEST}/main.css`, inject: true, dest: ASSETS_DEST }
 ];
 
 export const SYSTEM_CONFIG = {
   defaultJSExtensions: true,
-  paths: { }
+  paths: {
+    '*': `${APP_BASE}node_modules/*`
+  }
 };
 
 
