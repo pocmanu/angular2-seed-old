@@ -20,6 +20,6 @@
 				<span *ng-if="event.settings.show_hours" class="grid-item title end">{{event.settings.row + event.settings.sizey | rowToDate:5:_startDate}}</span>
 			</div>
 		</div>
-		<div class="grid-item title orange" draggable="true" style="width:130px">DRAG</div>
+		<div class="grid-item title orange" draggable="true" (ondragstart)="onDragStart($event)" style="width:130px">DRAG</div>
 	</div>
 </div>

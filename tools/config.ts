@@ -61,7 +61,7 @@ export const APP_ASSETS = [
 export const SYSTEM_CONFIG = {
   defaultJSExtensions: true,
   paths: {
-    '*': `${APP_BASE}node_modules/*`
+    '*': 'lib'
   }
 };
 

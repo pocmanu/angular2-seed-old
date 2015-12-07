@@ -154,6 +154,11 @@ export class Agenda {
 		let newEventProperties = this._computeTimeFromRows(settings);
 		this.eventAdded.next({start: newEventProperties.start, duration: newEventProperties.duration});
 	};
+
+	public onDragStart = (event): void => {
+		event.dataTransfer.setData("text", event.target.id);
+		console.log(event);
+	};
 }
 class AgendaEvent {
 	id: string;
