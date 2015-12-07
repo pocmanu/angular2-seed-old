@@ -31,21 +31,21 @@ export const VERSION_NODE         = '4.0.0';
 
 // Declare NPM dependencies (Note that globs should not be injected).
 export const DEV_DEPENDENCIES = [
-  { src: 'systemjs/dist/system-polyfills.js', dest: LIB_DEST },
+  { src: 'systemjs/dist/system-polyfills.js' },
 
-  { src: 'es6-shim/es6-shim.min.js',    dest: LIB_DEST, inject: 'shims' },
-  { src: 'reflect-metadata/Reflect.js', dest: LIB_DEST, inject: 'shims' },
-  { src: 'systemjs/dist/system.src.js', dest: LIB_DEST, inject: 'shims' },
+  { src: 'es6-shim/es6-shim.min.js', inject: 'shims' },
+  { src: 'reflect-metadata/Reflect.js', inject: 'shims' },
+  { src: 'systemjs/dist/system.src.js', inject: 'shims' },
 
   // Faster dev page load
-  { src: 'angular2/bundles/angular2.dev.js', dest: LIB_DEST, inject: 'libs' },
-  { src: 'angular2/bundles/router.dev.js', dest: LIB_DEST, inject: 'libs' },
-  { src: 'angular2/bundles/http.dev.js', dest: LIB_DEST, inject: 'libs' },
-  { src: 'jquery/dist/jquery.min.js',         dest: LIB_DEST, inject: 'libs' },
-  { src: 'materialize-css/dist/js/materialize.min.js', dest: LIB_DEST, inject: 'libs' },
+  { src: 'angular2/bundles/angular2.dev.js', inject: 'libs' },
+  { src: 'angular2/bundles/router.dev.js', inject: 'libs' },
+  { src: 'angular2/bundles/http.dev.js', inject: 'libs' },
+  { src: 'jquery/dist/jquery.min.js', inject: 'libs' },
+  { src: 'materialize-css/dist/js/materialize.min.js', inject: 'libs' },
 
-  { src: 'bootstrap/dist/css/bootstrap.css', dest: CSS_DEST, inject: true },
-  { src: 'materialize-css/dist/css/materialize.min.css',dest: CSS_DEST, inject: true },
+  { src: 'bootstrap/dist/css/bootstrap.css', inject: true },
+  { src: 'materialize-css/dist/css/materialize.min.css', inject: true },
 
   { src: 'bootstrap/dist/fonts/**/*', dest: FONTS_DEST}
 ];
@@ -54,8 +54,9 @@ DEV_DEPENDENCIES
   .filter(d => !/\*/.test(d.src)) // Skip globs
   .forEach(d => d.src = require.resolve(d.src));
 
+// Declare local files that needs to be injected
 export const APP_ASSETS = [
-  { src: `${ASSETS_DEST}/main.css`, inject: true, dest: ASSETS_DEST }
+  { src: `${ASSETS_DEST}/main.css`, inject: true }
 ];
 
 export const SYSTEM_CONFIG = {
