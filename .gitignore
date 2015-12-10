@@ -38,6 +38,7 @@ docs
 lib
 test
 tools/typings/tsd
+tmp
 data/config.json
 data/hoodie.bundle.min.js
 data/hoodie.bundle.js

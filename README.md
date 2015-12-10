@@ -28,9 +28,14 @@ _Does not rely on any global dependencies._
 
 ```
 .
+├── CONTRIBUTING.md
 ├── LICENSE
 ├── README.md
 ├── app
+│   ├── assets
+│   │   ├── img
+│   │   │   └── smile.png
+│   │   └── main.css
 │   ├── bootstrap.ts
 │   ├── components
 │   │   ├── about
@@ -48,11 +53,27 @@ _Does not rely on any global dependencies._
 │   │       ├── home.ts
 │   │       └── home_spec.ts
 │   ├── index.html
-│   ├── services
-│   │   ├── name_list.ts
-│   │   └── name_list_spec.ts
-│   ├── system.config.js
-│   └── typings.d.ts
+│   └── services
+│       ├── name_list.ts
+│       └── name_list_spec.ts
+├── appveyor.yml
+├── circle.yml
+├── dist
+│   └── dev
+│       ├── assets
+│       │   └── img
+│       │       └── smile.png
+│       ├── bootstrap.js
+│       ├── components
+│       │   ├── about
+│       │   │   └── about.js
+│       │   ├── app
+│       │   │   └── app.js
+│       │   └── home
+│       │       └── home.js
+│       ├── index.html
+│       └── services
+│           └── name_list.js
 ├── gulpfile.ts
 ├── karma.conf.js
 ├── package.json
@@ -73,20 +94,22 @@ _Does not rely on any global dependencies._
 ├── test-main.js
 ├── tools
 │   ├── config.ts
-│   ├── preinstall.js
 │   ├── tasks
-│   │   ├── build.csslib.dev.ts
-│   │   ├── build.docs.ts
-│   │   ├── build.fonts.ts
-│   │   ├── build.index.dev.ts
+│   │   ├── build.bundles.ts
+│   │   ├── build.deps.ts
+│   │   ├── build.docs.ts
+│   │   ├── build.html_css.prod.ts
+│   │   ├── build.img.dev.ts
+│   │   ├── build.index.ts
 │   │   ├── build.js.dev.ts
-│   │   ├── build.jslib.dev.ts
+│   │   ├── build.js.prod.ts
 │   │   ├── build.sass.dev.ts
 │   │   ├── build.test.ts
+│   │   ├── check.versions.ts
 │   │   ├── clean.ts
 │   │   ├── karma.start.ts
 │   │   ├── npm.ts
-│   │   ├── server.docs.ts
+│   │   ├── serve.docs.ts
 │   │   ├── server.start.ts
 │   │   ├── tsd.ts
 │   │   ├── tslint.ts
@@ -94,15 +117,6 @@ _Does not rely on any global dependencies._
 │   │   ├── watch.serve.ts
 │   │   └── watch.test.ts
 │   ├── typings
-│   │   ├── connect-livereload.d.ts
-│   │   ├── gulp-load-plugins.d.ts
-│   │   ├── karma.d.ts
-│   │   ├── tiny-lr.d.ts
-│   │   ├── ng2_test.d.ts
-│   │   ├── open.d.ts
-│   │   ├── run-sequence.d.ts
-│   │   ├── slash.d.ts
-│   │   └── yargs.d.ts
 │   ├── utils
 │   │   ├── server.ts
 │   │   ├── tasks-tools.ts
@@ -112,6 +126,7 @@ _Does not rely on any global dependencies._
 ├── tsconfig.json
 ├── tsd.json
 └── tslint.json
+
 ```
 
 # Configuration
@@ -165,17 +180,17 @@ Please see the [CONTRIBUTING](https://github.com/mgechev/angular2-seed/blob/mast
 :---: |:---: |:---: |:---: |:---: |:---: |
 [ryzy](https://github.com/ryzy) |[natarajanmca11](https://github.com/natarajanmca11) |[jerryorta-dev](https://github.com/jerryorta-dev) |[JakePartusch](https://github.com/JakePartusch) |[larsthorup](https://github.com/larsthorup) |[TuiKiken](https://github.com/TuiKiken) |
 
-[<img alt="evanplaice" src="https://avatars.githubusercontent.com/u/303159?v=3&s=117" width="117">](https://github.com/evanplaice) |[<img alt="ultrasonicsoft" src="https://avatars.githubusercontent.com/u/4145169?v=3&s=117" width="117">](https://github.com/ultrasonicsoft) |[<img alt="johnjelinek" src="https://avatars.githubusercontent.com/u/873610?v=3&s=117" width="117">](https://github.com/johnjelinek) |[<img alt="tandu" src="https://avatars.githubusercontent.com/u/273313?v=3&s=117" width="117">](https://github.com/tandu) |[<img alt="markharding" src="https://avatars.githubusercontent.com/u/851436?v=3&s=117" width="117">](https://github.com/markharding) |[<img alt="mjwwit" src="https://avatars.githubusercontent.com/u/4455124?v=3&s=117" width="117">](https://github.com/mjwwit) |
+[<img alt="johnjelinek" src="https://avatars.githubusercontent.com/u/873610?v=3&s=117" width="117">](https://github.com/johnjelinek) |[<img alt="evanplaice" src="https://avatars.githubusercontent.com/u/303159?v=3&s=117" width="117">](https://github.com/evanplaice) |[<img alt="ultrasonicsoft" src="https://avatars.githubusercontent.com/u/4145169?v=3&s=117" width="117">](https://github.com/ultrasonicsoft) |[<img alt="Brooooooklyn" src="https://avatars.githubusercontent.com/u/3468483?v=3&s=117" width="117">](https://github.com/Brooooooklyn) |[<img alt="tandu" src="https://avatars.githubusercontent.com/u/273313?v=3&s=117" width="117">](https://github.com/tandu) |[<img alt="markharding" src="https://avatars.githubusercontent.com/u/851436?v=3&s=117" width="117">](https://github.com/markharding) |
 :---: |:---: |:---: |:---: |:---: |:---: |
-[evanplaice](https://github.com/evanplaice) |[ultrasonicsoft](https://github.com/ultrasonicsoft) |[johnjelinek](https://github.com/johnjelinek) |[tandu](https://github.com/tandu) |[markharding](https://github.com/markharding) |[mjwwit](https://github.com/mjwwit) |
+[johnjelinek](https://github.com/johnjelinek) |[evanplaice](https://github.com/evanplaice) |[ultrasonicsoft](https://github.com/ultrasonicsoft) |[Brooooooklyn](https://github.com/Brooooooklyn) |[tandu](https://github.com/tandu) |[markharding](https://github.com/markharding) |
 
-[<img alt="philipooo" src="https://avatars.githubusercontent.com/u/1702399?v=3&s=117" width="117">](https://github.com/philipooo) |[<img alt="redian" src="https://avatars.githubusercontent.com/u/816941?v=3&s=117" width="117">](https://github.com/redian) |[<img alt="robertpenner" src="https://avatars.githubusercontent.com/u/79827?v=3&s=117" width="117">](https://github.com/robertpenner) |[<img alt="sclausen" src="https://avatars.githubusercontent.com/u/916076?v=3&s=117" width="117">](https://github.com/sclausen) |[<img alt="butterfieldcons" src="https://avatars.githubusercontent.com/u/12204784?v=3&s=117" width="117">](https://github.com/butterfieldcons) |[<img alt="jgolla" src="https://avatars.githubusercontent.com/u/1542447?v=3&s=117" width="117">](https://github.com/jgolla) |
+[<img alt="mjwwit" src="https://avatars.githubusercontent.com/u/4455124?v=3&s=117" width="117">](https://github.com/mjwwit) |[<img alt="ocombe" src="https://avatars.githubusercontent.com/u/265378?v=3&s=117" width="117">](https://github.com/ocombe) |[<img alt="philipooo" src="https://avatars.githubusercontent.com/u/1702399?v=3&s=117" width="117">](https://github.com/philipooo) |[<img alt="redian" src="https://avatars.githubusercontent.com/u/816941?v=3&s=117" width="117">](https://github.com/redian) |[<img alt="robertpenner" src="https://avatars.githubusercontent.com/u/79827?v=3&s=117" width="117">](https://github.com/robertpenner) |[<img alt="sclausen" src="https://avatars.githubusercontent.com/u/916076?v=3&s=117" width="117">](https://github.com/sclausen) |
 :---: |:---: |:---: |:---: |:---: |:---: |
-[philipooo](https://github.com/philipooo) |[redian](https://github.com/redian) |[robertpenner](https://github.com/robertpenner) |[sclausen](https://github.com/sclausen) |[butterfieldcons](https://github.com/butterfieldcons) |[jgolla](https://github.com/jgolla) |
+[mjwwit](https://github.com/mjwwit) |[ocombe](https://github.com/ocombe) |[philipooo](https://github.com/philipooo) |[redian](https://github.com/redian) |[robertpenner](https://github.com/robertpenner) |[sclausen](https://github.com/sclausen) |
 
-[<img alt="dstockhammer" src="https://avatars.githubusercontent.com/u/1156637?v=3&s=117" width="117">](https://github.com/dstockhammer) |
-:---: |
-[dstockhammer](https://github.com/dstockhammer) |
+[<img alt="butterfieldcons" src="https://avatars.githubusercontent.com/u/12204784?v=3&s=117" width="117">](https://github.com/butterfieldcons) |[<img alt="jgolla" src="https://avatars.githubusercontent.com/u/1542447?v=3&s=117" width="117">](https://github.com/jgolla) |[<img alt="dstockhammer" src="https://avatars.githubusercontent.com/u/1156637?v=3&s=117" width="117">](https://github.com/dstockhammer) |
+:---: |:---: |:---: |
+[butterfieldcons](https://github.com/butterfieldcons) |[jgolla](https://github.com/jgolla) |[dstockhammer](https://github.com/dstockhammer) |
 
 # Change Log
 

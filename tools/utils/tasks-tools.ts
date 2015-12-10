@@ -1,5 +1,5 @@
 import * as gulp from 'gulp';
-import * as plugins from 'gulp-load-plugins';
+import * as gulpLoadPlugins from 'gulp-load-plugins';
 import {readdirSync, existsSync, lstatSync} from 'fs';
 import {join} from 'path';
 import {TOOLS_DIR} from '../config';
@@ -11,7 +11,8 @@ export function loadTasks(): void {
 }
 
 export function task(taskname: string, option?: string | Object) {
-  return require(join('..', 'tasks', taskname))(gulp, plugins(), option);
+  let plugins = gulpLoadPlugins();
+  return require(join('..', 'tasks', taskname))(gulp, plugins, option);
 }
 
 
@@ -29,16 +30,18 @@ function scanDir(root: string, cb: (taskname: string) => void) {
   walk(root);
 
   function walk(path) {
-    readdirSync(path).forEach(function(file) {
+    let files = readdirSync(path);
+    for (let i = 0; i < files.length; i += 1) {
+      let file = files[i];
       let curPath = join(path, file);
       if (lstatSync(curPath).isDirectory()) { // recurse
         path = file;
         walk(curPath);
       }
-      if (lstatSync(curPath).isFile() && file.endsWith('.ts')) {
+      if (lstatSync(curPath).isFile() && /\.ts$/.test(file)) {
         let taskname = file.replace(/(\.ts)/, '');
         cb(taskname);
       }
-    });
+    }
   }
 }
