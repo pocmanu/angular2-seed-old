@@ -47,6 +47,9 @@
     "node/node.d.ts": {
       "commit": "923c5431d9447db9d5cf41adc5914e3c94c1ff10"
     },
+    "moment/moment-node.d.ts": {
+      "commit": "393c2013fe87ad1a23ee775aef60aafeb0b7a1c5"
+    },
     "moment/moment.d.ts": {
       "commit": "393c2013fe87ad1a23ee775aef60aafeb0b7a1c5"
     }

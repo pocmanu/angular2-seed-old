@@ -1,22 +1,22 @@
 <div [attr.id]="_id" class="modal" style="width: 40%;">
-  <form [ng-form-model]="form" (submit)="onSubmit()" #hf="form">
+  <form [ngFormModel]="form" (submit)="onSubmit()" #hf="ngForm">
     <div class="modal-content">
       <h4>Login</h4>
       <div class="input-field">
-        <input ng-control="username" type="text" id="login">
+        <input ngControl="username" type="text" id="login">
         <label for="login" style="left: 0px;">Login</label>
       </div>
       <div class="input-field">
-        <input ng-control="password" type="password" id="password">
+        <input nControl="password" type="password" id="password">
         <label for="password" style="left: 0px;">Password</label>
       </div>
-      <div *ng-if="signup" class="input-field">
-        <input ng-control="passwordcheck" type="password" id="passwordcheck">
+      <div *ngIf="signup" class="input-field">
+        <input ngControl="passwordcheck" type="password" id="passwordcheck">
         <label for="passwordcheck" style="left: 0px;">Confirm password</label>
       </div>
     </div>
     <div class="modal-footer">
-      <button type="submit" class="modal-action modal-close waves-effect purple lighten-1 waves-purple btn-flat">OK</a>
+      <button type="submit" class="modal-action modal-close waves-effect purple lighten-1 waves-purple btn-flat">OK</button>
     </div>
   </form>
 </div>

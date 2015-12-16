@@ -1,8 +1,8 @@
 import {Component, View, Directive, ElementRef, Renderer, EventEmitter, DynamicComponentLoader, Host, ViewEncapsulation, Type, ComponentRef, KeyValueDiffer, KeyValueDiffers, OnInit, DoCheck} from 'angular2/angular2';
 
 @Directive({
-	selector: '[ng-grid]',
-	inputs: ['config: ng-grid'],
+	selector: '[ngGrid]',
+	inputs: ['config: ngGrid'],
 	host: {
 		'(mousedown)': '_onMouseDown($event)',
 		'(mousemove)': '_onMouseMove($event)',
@@ -944,8 +944,8 @@ export class NgGrid implements OnInit, DoCheck {
 }
 
 @Directive({
-	selector: '[ng-grid-item]',
-	inputs: [ 'config: ng-grid-item', 'gridPosition: ng-grid-position', 'gridSize: ng-grid-size' ],
+	selector: '[ngGridItem]',
+	inputs: [ 'config: ngGridItem', 'gridPosition: ngGridPosition', 'gridSize: ngGridSize' ],
 	outputs: ['itemChange', 'dragStart', 'drag', 'dragStop', 'resizeStart', 'resize', 'resizeStop']
 })
 export class NgGridItem implements OnInit {

@@ -1,8 +1,8 @@
 <h4>Number of todos : {{todos.length}}</h4>
-<form #f="form" (submit)='addTodo(f.value)' class="col s12">
+<form #f="ngForm" (submit)='addTodo(f.value)' class="col s12">
   <div class="row valign-wrapper">
     <div class="input-field col s5">
-      <input ng-control="todoText" type="text" id="newtask">
+      <input ngControl="todoText" type="text" id="newtask">
       <label for="newtask">New task description</label>
     </div>
     <div class="valign">
@@ -11,7 +11,7 @@
   </div>
 </form>
 <div class="col s12">
-  <div *ng-for="#todo of todos">
+  <div *ngFor="#todo of todos">
     <md-checkbox [checked]="todo.done==true" (click)="toggleCompletion({'id': todo.id, 'done':!todo.done})" [_id]="todo.id" [uid]="todo.id">{{todo.title}}</md-checkbox>
     <a class="tiny material-icons" (click)="removeTodo(todo.id)">delete</a>
   </div>
