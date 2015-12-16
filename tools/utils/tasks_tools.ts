@@ -1,4 +1,6 @@
 import * as gulp from 'gulp';
+import * as util from 'gulp-util';
+import * as chalk from 'chalk';
 import * as gulpLoadPlugins from 'gulp-load-plugins';
 import {readdirSync, existsSync, lstatSync} from 'fs';
 import {join} from 'path';
@@ -10,11 +12,10 @@ export function loadTasks(): void {
   scanDir(TASKS_PATH, (taskname) => registerTask(taskname));
 }
 
-export function task(taskname: string, option?: string | Object) {
-  let plugins = gulpLoadPlugins();
-  return require(join('..', 'tasks', taskname))(gulp, plugins, option);
+export function task(taskname: string, option?: string) {
+  util.log('Loading task', chalk.yellow(taskname, option));
+  return require(join('..', 'tasks', taskname))(gulp, gulpLoadPlugins(), option);
 }
-
 
 // ----------
 // Private.
