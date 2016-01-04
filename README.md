@@ -20,6 +20,17 @@ npm install       # or `npm run reinstall` if you get an error
 npm start         # start with --env dev
 npm run docs      # api document for app
 ```
+
+## Using the experimental hot loader support
+
+If you want to try the experimental [hot loading](http://blog.mgechev.com/2015/10/26/angular2-hot-loader-hot-loading-tooling/) support use:
+
+```
+npm start -- --hot-loader true
+```
+
+Note that the hot loader is still in experimental phase of development and there are some missing features. If you experience any issues with it report them at [here](https://github.com/mgechev/angular2-hot-loader/issues).
+
 _Does not rely on any global dependencies._
 
 # Directory Structure
@@ -50,54 +61,26 @@ _Does not rely on any global dependencies._
 │   │       ├── home.html
 │   │       ├── home.ts
 │   │       └── home_spec.ts
+│   ├── hot_loader_bootstrap.ts
 │   ├── index.html
 │   └── services
 │       ├── name_list.ts
 │       └── name_list_spec.ts
 ├── appveyor.yml
-├── circle.yml
 ├── dist
-│   └── dev
-│       ├── assets
-│       │   └── img
-│       │       └── smile.png
-│       ├── bootstrap.js
-│       ├── components
-│       │   ├── about
-│       │   │   └── about.js
-│       │   ├── app
-│       │   │   └── app.js
-│       │   └── home
-│       │       └── home.js
-│       ├── index.html
-│       └── services
-│           └── name_list.js
 ├── gulpfile.ts
 ├── karma.conf.js
 ├── package.json
-├── test
-│   ├── components
-│   │   ├── about
-│   │   │   ├── about.js
-│   │   │   └── about_spec.js
-│   │   ├── app
-│   │   │   ├── app.js
-│   │   │   └── app_spec.js
-│   │   └── home
-│   │       ├── home.js
-│   │       └── home_spec.js
-│   └── services
-│       ├── name_list.js
-│       └── name_list_spec.js
 ├── test-main.js
 ├── tools
 │   ├── config.ts
 │   ├── tasks
+│   │   ├── build.assets.dev.ts
+│   │   ├── build.assets.prod.ts
 │   │   ├── build.bundles.ts
 │   │   ├── build.deps.ts
 │   │   ├── build.docs.ts
 │   │   ├── build.html_css.prod.ts
-│   │   ├── build.img.dev.ts
 │   │   ├── build.index.ts
 │   │   ├── build.js.dev.ts
 │   │   ├── build.js.prod.ts
@@ -116,15 +99,15 @@ _Does not rely on any global dependencies._
 │   │   └── watch.test.ts
 │   ├── typings
 │   ├── utils
+│   │   ├── code_change_tools.ts
 │   │   ├── server.ts
-│   │   ├── tasks-tools.ts
-│   │   ├── template-injectables.ts
-│   │   └── template-locals.ts
+│   │   ├── tasks_tools.ts
+│   │   ├── template_injectables.ts
+│   │   └── template_locals.ts
 │   └── utils.ts
 ├── tsconfig.json
 ├── tsd.json
 └── tslint.json
-
 ```
 
 # Configuration
@@ -150,7 +133,7 @@ If you want to use your custom libraries:
 
 ```bash
 npm install my-library --save
-vim tools/config.js
+vim tools/config.ts
 ```
 Add reference to the installed library in `NPM_DEPENDENCIES`:
 
@@ -184,6 +167,12 @@ npm run karma.start           # 2nd window
 # Contributing
 
 Please see the [CONTRIBUTING](https://github.com/mgechev/angular2-seed/blob/master/CONTRIBUTING.md) file for guidelines.
+
+# Examples
+
+Forks of this project demonstrate how to extend and integrate with other libraries:
+
+ - https://github.com/justindujardin/angular2-seed - integration with [ng2-material](https://github.com/justindujardin/ng2-material)
 
 # Contributors
 
